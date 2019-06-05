@@ -1,0 +1,6 @@
+server:
+  ip: 106.14.215.64
+
+logging:
+  level:
+    com.mnan2c.fms: warn

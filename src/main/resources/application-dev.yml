@@ -1,0 +1,6 @@
+server:
+  ip: localhost
+
+logging:
+  level:
+    com.mnan2c.fms: debug
