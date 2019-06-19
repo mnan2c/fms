@@ -19,6 +19,8 @@ public interface UserRepository extends JpaSpecificationExecutor<User>, JpaRepos
 
   User findByNameOrEmail(String name, String email);
 
+  boolean existsByNameAndPassword(String name, String password);
+
   @Transactional(timeout = 10)
   @Modifying
   @Query("update User set userName = ?1 where id = ?2")

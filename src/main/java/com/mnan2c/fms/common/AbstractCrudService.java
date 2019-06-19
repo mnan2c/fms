@@ -31,8 +31,7 @@ public abstract class AbstractCrudService<E extends AbstractEntity, DTO extends 
     if (dto.getId() == null) {
       throw BusinessException.instance(ErrorConsts.ID_IS_REQUIRED);
     }
-    dto = findOne(dto.getId());
-    if (dto == null) {
+    if (findOne(dto.getId()) == null) {
       throw BusinessException.instance(ErrorConsts.ENTITY_NOT_EXISTED);
     }
     E entity = mapper.dtoToEntity(dto);
@@ -66,6 +65,9 @@ public abstract class AbstractCrudService<E extends AbstractEntity, DTO extends 
   @Override
   public Page<DTO> findAll(Pageable pageable) {
     Page<E> page = repository.findAll(pageable);
+    if (page.getContent() == null) {
+      return null;
+    }
     return new PageImpl<>(
         mapper.entitiesToDtos(page.getContent()), //
         pageable, //

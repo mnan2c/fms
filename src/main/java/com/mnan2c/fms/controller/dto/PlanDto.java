@@ -1,11 +1,10 @@
 package com.mnan2c.fms.controller.dto;
 
 import com.mnan2c.fms.common.AbstractDto;
-import com.mnan2c.fms.enumeration.PlanType;
+import com.mnan2c.fms.enums.Interval;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
 
 @Data
@@ -13,15 +12,24 @@ public class PlanDto extends AbstractDto {
 
   @NotBlank private String name;
 
-  @NotNull private PlanType type;
+  private Interval circle;
+
+  //  NEW 0 ,
+  //  IN_PROGRESS 1,
+  //  BLOCKED 2,
+  //  FINISHED 3
+  private Integer status;
+
+  //  URGENT 0,
+  //  HIGH 1,
+  //  NORMAL 2
+  private Integer priority;
 
   private ZonedDateTime beginDate;
 
-  @NotNull private ZonedDateTime endDate;
+  private ZonedDateTime endDate;
 
-  private double progress;
+  private Integer targetValue;
 
-  private String description;
-
-  private String link;
+  private Integer achievedValue;
 }

@@ -17,8 +17,6 @@ public abstract class AbstractEntity implements Serializable {
 
   @Id @GeneratedValue private Long id;
 
-  @JsonIgnore private Boolean active = true;
-
   @JsonIgnore @CreatedDate private ZonedDateTime createdDate = ZonedDateTime.now();
 
   @JsonIgnore @CreatedBy private Long createdBy;

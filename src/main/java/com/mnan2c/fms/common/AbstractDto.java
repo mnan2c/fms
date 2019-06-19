@@ -8,7 +8,6 @@ import java.time.ZonedDateTime;
 public class AbstractDto {
 
   private Long id;
-  private Boolean active;
   private Long createdBy;
   private ZonedDateTime createdDate;
 }

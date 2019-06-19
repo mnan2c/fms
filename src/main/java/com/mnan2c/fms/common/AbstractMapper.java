@@ -4,6 +4,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.core.GenericTypeResolver;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,6 +14,8 @@ public class AbstractMapper<E extends AbstractEntity, D extends AbstractDto> {
   protected final Class<E> entityClazz;
 
   protected final Class<D> dtoClazz;
+
+  private static final List<String> standard_ignore_properties = Arrays.asList("createdDate");
 
   @SuppressWarnings("unchecked")
   public AbstractMapper() {
@@ -35,7 +39,10 @@ public class AbstractMapper<E extends AbstractEntity, D extends AbstractDto> {
       return null;
     }
     E entity = BeanUtils.instantiateClass(this.entityClazz);
-    BeanUtils.copyProperties(dto, entity, ignoreProperties);
+    List<String> allIgnore = new ArrayList<>();
+    allIgnore.addAll(Arrays.asList(ignoreProperties));
+    allIgnore.addAll(standard_ignore_properties);
+    BeanUtils.copyProperties(dto, entity, allIgnore.toArray(new String[allIgnore.size()]));
     return entity;
   }
 

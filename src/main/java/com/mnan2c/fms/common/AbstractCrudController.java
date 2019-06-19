@@ -39,7 +39,7 @@ public abstract class AbstractCrudController<E extends AbstractEntity, D extends
 
   @GetMapping
   public ResponseEntity getAll(
-      @RequestParam(value = "page", defaultValue = "1") int page,
+      @RequestParam(value = "page", defaultValue = "0") int page,
       @RequestParam(value = "size", defaultValue = "10") int size) {
     log.debug("Request to get all entities");
     Pageable pageable = PageRequest.of(page, size);
@@ -52,5 +52,12 @@ public abstract class AbstractCrudController<E extends AbstractEntity, D extends
     log.debug("Request to get entities by ids: [{}]", ids);
     List<D> dtos = crudService.findByIds(ids);
     return ResponseEntity.ok(dtos);
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity deleteById(@PathVariable("id") Long id) {
+    log.debug("request to delete entity by id: [{}]", id);
+    crudService.delete(id);
+    return ResponseEntity.ok(1);
   }
 }

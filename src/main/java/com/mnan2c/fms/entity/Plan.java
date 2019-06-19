@@ -1,14 +1,13 @@
 package com.mnan2c.fms.entity;
 
 import com.mnan2c.fms.common.AbstractEntity;
-import com.mnan2c.fms.enumeration.PlanType;
+import com.mnan2c.fms.enums.Interval;
 import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
-import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
 @Data
@@ -19,15 +18,24 @@ public class Plan extends AbstractEntity {
   private String name;
 
   @Enumerated(EnumType.STRING)
-  private PlanType type;
+  private Interval circle;
+
+  //  NEW 0 ,
+  //  IN_PROGRESS 1,
+  //  BLOCKED 2,
+  //  FINISHED 3
+  private Integer status = 0;
+
+  //  URGENT 0,
+  //  HIGH 1,
+  //  NORMAL 2
+  private Integer priority = 2;
 
   private ZonedDateTime beginDate;
 
   private ZonedDateTime endDate;
 
-  private BigDecimal progress;
+  private Integer targetValue;
 
-  private String description;
-
-  private String link;
+  private Integer achievedValue;
 }
