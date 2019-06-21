@@ -6,6 +6,7 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
@@ -15,9 +16,11 @@ import java.time.ZonedDateTime;
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable {
 
-  @Id @GeneratedValue private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
 
   @JsonIgnore @CreatedDate private ZonedDateTime createdDate = ZonedDateTime.now();
 
-  @JsonIgnore @CreatedBy private Long createdBy;
+  @JsonIgnore @CreatedBy private Integer createdBy;
 }

@@ -2,17 +2,17 @@ package com.mnan2c.fms.entity;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table
 @Data
 public class UserRole {
 
-  @Id @GeneratedValue private Long id;
-  private Long userId;
-  private Long roleId;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
+
+  private Integer userId;
+  private Integer roleId;
 }

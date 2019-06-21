@@ -31,7 +31,7 @@ public abstract class AbstractCrudController<E extends AbstractEntity, D extends
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity getOne(@PathVariable("id") Long id) {
+  public ResponseEntity getOne(@PathVariable("id") Integer id) {
     log.debug("Request to get entity by id: [{}]", id);
     D dto = crudService.findOne(id);
     return ResponseEntity.ok(dto);
@@ -48,14 +48,14 @@ public abstract class AbstractCrudController<E extends AbstractEntity, D extends
   }
 
   @GetMapping(params = {"ids"})
-  public ResponseEntity getByIds(@RequestParam("ids") List<Long> ids) {
+  public ResponseEntity getByIds(@RequestParam("ids") List<Integer> ids) {
     log.debug("Request to get entities by ids: [{}]", ids);
     List<D> dtos = crudService.findByIds(ids);
     return ResponseEntity.ok(dtos);
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity deleteById(@PathVariable("id") Long id) {
+  public ResponseEntity deleteById(@PathVariable("id") Integer id) {
     log.debug("request to delete entity by id: [{}]", id);
     crudService.delete(id);
     return ResponseEntity.ok(1);

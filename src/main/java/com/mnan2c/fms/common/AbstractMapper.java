@@ -48,14 +48,14 @@ public class AbstractMapper<E extends AbstractEntity, D extends AbstractDto> {
 
   public List<D> entitiesToDtos(List<E> entities) {
     if (CollectionUtils.isEmpty(entities)) {
-      return null;
+      return new ArrayList<>();
     }
     return entities.stream().map(entity -> entityToDto(entity)).collect(Collectors.toList());
   }
 
   public List<E> dtosToEntities(List<D> dtos) {
     if (CollectionUtils.isEmpty(dtos)) {
-      return null;
+      return new ArrayList<>();
     }
     return dtos.stream().map(dto -> dtoToEntity(dto)).collect(Collectors.toList());
   }

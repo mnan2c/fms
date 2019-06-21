@@ -3,6 +3,8 @@ package com.mnan2c.fms.entity;
 import com.mnan2c.fms.common.AbstractEntity;
 import com.mnan2c.fms.enums.Interval;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,6 +15,8 @@ import java.time.ZonedDateTime;
 @Data
 @Entity
 @Table(name = "plan")
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class Plan extends AbstractEntity {
 
   private String name;

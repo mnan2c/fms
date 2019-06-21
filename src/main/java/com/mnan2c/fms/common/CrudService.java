@@ -17,11 +17,11 @@ public interface CrudService<E, DTO> {
 
   Page<DTO> findAll(Pageable pageable);
 
-  DTO findOne(Long id);
+  DTO findOne(Integer id);
 
-  void delete(Long id);
+  void delete(Integer id);
 
-  List<DTO> findByIds(List<Long> ids);
+  List<DTO> findByIds(List<Integer> ids);
 
   E deltaUpdate(E entity) throws BusinessException;
 }

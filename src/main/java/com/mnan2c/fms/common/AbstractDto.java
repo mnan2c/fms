@@ -7,7 +7,7 @@ import java.time.ZonedDateTime;
 @Data
 public class AbstractDto {
 
-  private Long id;
-  private Long createdBy;
+  private Integer id;
+  private Integer createdBy;
   private ZonedDateTime createdDate;
 }

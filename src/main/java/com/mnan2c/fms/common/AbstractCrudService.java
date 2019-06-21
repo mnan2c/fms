@@ -15,7 +15,7 @@ import java.util.Map;
 public abstract class AbstractCrudService<E extends AbstractEntity, DTO extends AbstractDto>
     implements CrudService<E, DTO> {
 
-  @Inject private BaseRepository<E, Long> repository;
+  @Inject private BaseRepository<E, Integer> repository;
 
   @Inject private AbstractMapper<E, DTO> mapper;
 
@@ -40,12 +40,12 @@ public abstract class AbstractCrudService<E extends AbstractEntity, DTO extends 
   }
 
   @Override
-  public DTO findOne(Long id) {
+  public DTO findOne(Integer id) {
     return mapper.entityToDto(repository.getOne(id));
   }
 
   @Override
-  public List<DTO> findByIds(List<Long> ids) {
+  public List<DTO> findByIds(List<Integer> ids) {
     if (CollectionUtils.isEmpty(ids)) {
       return null;
     }
@@ -76,7 +76,7 @@ public abstract class AbstractCrudService<E extends AbstractEntity, DTO extends 
   }
 
   @Override
-  public void delete(Long id) {
+  public void delete(Integer id) {
     repository.deleteById(id);
   }
 

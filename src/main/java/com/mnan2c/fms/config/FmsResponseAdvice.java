@@ -1,8 +1,9 @@
 package com.mnan2c.fms.config;
 
-import com.mnan2c.fms.common.FmsResult;
 import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -19,7 +20,7 @@ public class FmsResponseAdvice implements ResponseBodyAdvice {
       Class aClass,
       ServerHttpRequest serverHttpRequest,
       ServerHttpResponse serverHttpResponse) {
-    return FmsResult.successResult(o);
+    return new ResponseEntity<>(o, HttpStatus.OK);
   }
 
   @Override

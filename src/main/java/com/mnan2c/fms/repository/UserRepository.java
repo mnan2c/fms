@@ -12,7 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface UserRepository extends JpaSpecificationExecutor<User>, BaseRepository<User, Long> {
+public interface UserRepository
+    extends JpaSpecificationExecutor<User>, BaseRepository<User, Integer> {
 
   User findByName(String name);
 
@@ -23,12 +24,12 @@ public interface UserRepository extends JpaSpecificationExecutor<User>, BaseRepo
   @Transactional(timeout = 10)
   @Modifying
   @Query("update User set userName = ?1 where id = ?2")
-  int modifyById(String userName, Long id);
+  int modifyById(String userName, Integer id);
 
   @Transactional
   @Modifying
   @Query("delete from User where id = ?1")
-  void deleteById(Long id);
+  void deleteById(Integer id);
 
   @Query("select u from User u")
   Page<User> findALL(Pageable pageable);

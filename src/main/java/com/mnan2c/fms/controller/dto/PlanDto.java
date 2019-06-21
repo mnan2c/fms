@@ -3,11 +3,15 @@ package com.mnan2c.fms.controller.dto;
 import com.mnan2c.fms.common.AbstractDto;
 import com.mnan2c.fms.enums.Interval;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 import java.time.ZonedDateTime;
 
 @Data
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class PlanDto extends AbstractDto {
 
   @NotBlank private String name;

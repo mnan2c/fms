@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Table
 public class Address {
 
-  @Id private Long userId;
+  @Id private Integer userId;
   private String province;
   private String city;
   private String street;
