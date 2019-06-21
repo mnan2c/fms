@@ -2,10 +2,10 @@ package com.mnan2c.fms.common;
 
 import com.mnan2c.fms.exception.BusinessException;
 import com.mnan2c.fms.exception.ErrorConsts;
+import com.mnan2c.fms.repository.BaseRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.util.CollectionUtils;
 
 import javax.inject.Inject;
@@ -15,7 +15,7 @@ import java.util.Map;
 public abstract class AbstractCrudService<E extends AbstractEntity, DTO extends AbstractDto>
     implements CrudService<E, DTO> {
 
-  @Inject private JpaRepository<E, Long> repository;
+  @Inject private BaseRepository<E, Long> repository;
 
   @Inject private AbstractMapper<E, DTO> mapper;
 
