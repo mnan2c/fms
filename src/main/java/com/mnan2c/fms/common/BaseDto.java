@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.ZonedDateTime;
 
 @Data
-public class AbstractDto {
+public class BaseDto {
 
   private Integer id;
   private Integer createdBy;

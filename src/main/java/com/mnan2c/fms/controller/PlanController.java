@@ -1,6 +1,6 @@
 package com.mnan2c.fms.controller;
 
-import com.mnan2c.fms.common.AbstractCrudController;
+import com.mnan2c.fms.common.BaseCrudController;
 import com.mnan2c.fms.controller.dto.PlanDto;
 import com.mnan2c.fms.entity.Plan;
 import com.mnan2c.fms.repository.PlanRepository;
@@ -16,7 +16,7 @@ import javax.inject.Inject;
 
 @RestController
 @RequestMapping("/api/plans")
-public class PlanController extends AbstractCrudController<Plan, PlanDto> {
+public class PlanController extends BaseCrudController<Plan, PlanDto> {
   @Inject private PlanService planService;
   @Inject private PlanRepository planRepository;
 
@@ -30,14 +30,14 @@ public class PlanController extends AbstractCrudController<Plan, PlanDto> {
       @RequestParam(value = "size", defaultValue = "10") int size) {
     Sort sort =
         new Sort(Sort.Direction.ASC, "status") //
-            .and(new Sort(Sort.Direction.DESC, "createDate"));
+            .and(new Sort(Sort.Direction.DESC, "createdDate"));
     Pageable pageable = PageRequest.of(page, size, sort);
     Page<PlanDto> dtos = planService.findAll(pageable);
     return ResponseEntity.ok(dtos);
   }
 
   @PutMapping("/complete/{id}")
-  public Object completePlan(@PathVariable Integer id) {
+  public int completePlan(@PathVariable Integer id) {
     return planRepository.completePlan(id);
   }
 }

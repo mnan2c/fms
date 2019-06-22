@@ -6,19 +6,15 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
-import java.time.ZonedDateTime;
+import javax.validation.constraints.NotNull;
 
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class UserDto extends BaseDto {
+public class NoticeDto extends BaseDto {
 
   @NotBlank private String name;
-  private String password;
-  private String email;
-  private String telephone;
-  private String address;
-  private String nickName;
-  private ZonedDateTime birth;
-  private String description;
+
+  // 3. Important; 2. Normal; 1. Minor
+  @NotNull private Integer importance = 2;
 }

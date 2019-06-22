@@ -1,6 +1,6 @@
 package com.mnan2c.fms.entity;
 
-import com.mnan2c.fms.common.AbstractEntity;
+import com.mnan2c.fms.common.BaseEntity;
 import com.mnan2c.fms.enums.Interval;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,10 +14,10 @@ import java.time.ZonedDateTime;
 
 @Data
 @Entity
-@Table(name = "plan")
+@Table
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class Plan extends AbstractEntity {
+public class Plan extends BaseEntity {
 
   private String name;
 

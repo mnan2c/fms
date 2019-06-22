@@ -14,15 +14,19 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class FmsResult implements Serializable {
 
-  private String code;
+  private Integer statusCodeValue;
   private String message;
-  private Object data;
+  private Object body;
+
+  public static FmsResult instance(Integer code, String message) {
+    return new FmsResult(code, message, null);
+  }
 
   public static FmsResult instance(ErrorConsts consts) {
     return new FmsResult(consts.getCode(), consts.getMessage(), null);
   }
 
   public static FmsResult successResult(Object data) {
-    return new FmsResult("200", "", data);
+    return new FmsResult(200, "", data);
   }
 }

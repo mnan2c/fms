@@ -1,4 +1,4 @@
-package com.mnan2c.fms.config;
+package com.mnan2c.fms.common;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
@@ -27,9 +27,10 @@ public class FmsResponseAdvice implements ResponseBodyAdvice {
   public boolean supports(MethodParameter methodParameter, Class clas) {
     // 获取当前处理请求的controller的方法
     String methodName = methodParameter.getMethod().getName();
+    Class<?> returnType = methodParameter.getMethod().getReturnType();
     // 不拦截/不需要处理返回值 的方法
     String method = "loginCheck"; // 如登录
-    // 不拦截
-    return !method.equals(methodName);
+    // 不拦截: 方法名补位loginCheck，且返回的实体类不为FmsResult
+    return !method.equals(methodName) && !FmsResult.class.equals(returnType);
   }
 }

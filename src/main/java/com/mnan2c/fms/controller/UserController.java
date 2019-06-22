@@ -1,6 +1,6 @@
 package com.mnan2c.fms.controller;
 
-import com.mnan2c.fms.common.AbstractCrudController;
+import com.mnan2c.fms.common.BaseCrudController;
 import com.mnan2c.fms.controller.dto.UserDto;
 import com.mnan2c.fms.entity.User;
 import com.mnan2c.fms.exception.BusinessException;
@@ -16,7 +16,7 @@ import javax.inject.Inject;
 
 @RestController
 @RequestMapping("/api/user")
-public class UserController extends AbstractCrudController<User, UserDto> {
+public class UserController extends BaseCrudController<User, UserDto> {
   @Inject private UserRepository userRepository;
 
   @PostMapping("/login")

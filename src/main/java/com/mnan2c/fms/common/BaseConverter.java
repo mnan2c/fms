@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AbstractMapper<E extends AbstractEntity, D extends AbstractDto> {
+public class BaseConverter<E extends BaseEntity, D extends BaseDto> {
 
   protected final Class<E> entityClazz;
 
@@ -18,9 +18,9 @@ public class AbstractMapper<E extends AbstractEntity, D extends AbstractDto> {
   private static final List<String> standard_ignore_properties = Arrays.asList("createdDate");
 
   @SuppressWarnings("unchecked")
-  public AbstractMapper() {
+  public BaseConverter() {
     Class<?>[] genericTypes =
-        GenericTypeResolver.resolveTypeArguments(getClass(), AbstractMapper.class);
+        GenericTypeResolver.resolveTypeArguments(getClass(), BaseConverter.class);
     this.entityClazz = (Class<E>) genericTypes[0];
     this.dtoClazz = (Class<D>) genericTypes[1];
   }

@@ -14,7 +14,7 @@ import java.time.ZonedDateTime;
 
 @Data
 @MappedSuperclass
-public abstract class AbstractEntity implements Serializable {
+public abstract class BaseEntity implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

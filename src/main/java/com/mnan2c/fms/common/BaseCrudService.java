@@ -12,12 +12,12 @@ import javax.inject.Inject;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractCrudService<E extends AbstractEntity, DTO extends AbstractDto>
+public abstract class BaseCrudService<E extends BaseEntity, DTO extends BaseDto>
     implements CrudService<E, DTO> {
 
   @Inject private BaseRepository<E, Integer> repository;
 
-  @Inject private AbstractMapper<E, DTO> mapper;
+  @Inject private BaseConverter<E, DTO> mapper;
 
   @Override
   public DTO create(DTO dto) {

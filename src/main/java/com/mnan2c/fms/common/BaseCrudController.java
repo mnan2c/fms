@@ -12,9 +12,9 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
-public abstract class AbstractCrudController<E extends AbstractEntity, D extends AbstractDto> {
+public abstract class BaseCrudController<E extends BaseEntity, D extends BaseDto> {
 
-  @Inject private AbstractCrudService<E, D> crudService;
+  @Inject private BaseCrudService<E, D> crudService;
 
   @PostMapping
   public ResponseEntity create(@Valid @RequestBody D dto) {
