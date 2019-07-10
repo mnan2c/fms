@@ -1,43 +1,69 @@
 package com.mnan2c.fms.config;
 
 import com.mnan2c.fms.exception.BusinessException;
-import com.mnan2c.fms.exception.ErrorConsts;
-import com.mnan2c.fms.repository.UserRepository;
-import com.mnan2c.fms.utils.JwtUtils;
-import org.springframework.web.bind.annotation.RequestMethod;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.inject.Inject;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 // 定义拦截器，验证请求携带的token信息。
+@Slf4j
 public class JwtInterceptor extends HandlerInterceptorAdapter {
-  @Inject private UserRepository userRepository;
+  //  @Inject private UserRepository userRepository;
+
+  //  @Value("${request.origin}")
+  //  private String requestOrigin;
 
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-      throws Exception {
-    // 自动排除生成token的路径,并且如果是options请求是cors跨域预请求，设置allow对应头信息
-    if (request.getRequestURI().equals("/api/user/login")
-        || request.getRequestURI().equals("/api/user/register")
-        || request.getRequestURI().equals("/error")
-        || RequestMethod.OPTIONS.toString().equals(request.getMethod())) {
-      return true;
-    }
+      throws BusinessException {
+    //    String origin = request.getHeader("Origin");
+    //    log.warn("request origin: [{}]", origin);
+    //    response.addHeader("Access-Control-Allow-Origin", requestOrigin);
+    //    response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS, DELETE");
+    //    response.addHeader(
+    //        "Access-Control-Allow-Headers",
+    //        "authorization, Origin, X-Requested-With, Content-Type, Accept");
+    //    response.addHeader("Access-Control-Allow-Credentials", "true");
+    //    if (RequestMethod.OPTIONS.toString().equals(request.getMethod())) {
+    //      response.setStatus(HttpStatus.NO_CONTENT.value());
+    //      return true;
+    //    }
+    //    try {
+    //      String token = request.getHeader("Authorization");
+    //      if (StringUtils.isBlank(token)) {
+    //        throw BusinessException.instance(ErrorConsts.INVALID_TOKEN);
+    //      } else {
+    //        Map<String, String> tokenInfo = JwtUtils.extractToken(token);
+    //        if (tokenInfo != null
+    //            && !userRepository.existsByNameAndPassword(
+    //                tokenInfo.get("name"), tokenInfo.get("password"))) {
+    //          throw BusinessException.instance(ErrorConsts.INVALID_USERNAME_OR_PASSWORD);
+    //        }
+    //      }
+    //    } catch (BusinessException ex) {
+    //      log.warn("caught exception, code: [{}], message: [{}]", ex.getCode(), ex.getMessage());
+    //      response.setStatus(HttpStatus.UNAUTHORIZED.value());
+    //      return false;
+    //    }
+    //    response.setStatus(HttpStatus.OK.value());
+    return true;
+  }
 
-    String token = request.getHeader("Authorization");
-    if (token == null || token.trim() == "") {
-      throw BusinessException.instance(ErrorConsts.INVALID_TOKEN);
-    }
-    try {
-      Map<String, String> tokenInfo = JwtUtils.extractToken(token);
-      return userRepository.existsByNameAndPassword(
-          tokenInfo.get("name"), tokenInfo.get("password"));
-    } catch (Exception e) {
-      throw new ServletException(e.getMessage());
-    }
+  @Override
+  public void postHandle(
+      HttpServletRequest request,
+      HttpServletResponse response,
+      Object handler,
+      ModelAndView modelAndView) {
+    log.debug("postHandle");
+  }
+
+  @Override
+  public void afterCompletion(
+      HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+    log.debug("after completion");
   }
 }

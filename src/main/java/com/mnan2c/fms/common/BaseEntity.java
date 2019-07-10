@@ -1,6 +1,5 @@
 package com.mnan2c.fms.common;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -10,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 @Data
 @MappedSuperclass
@@ -20,7 +19,7 @@ public abstract class BaseEntity implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @JsonIgnore @CreatedDate private ZonedDateTime createdDate = ZonedDateTime.now();
+  @CreatedDate private LocalDateTime createdDate = LocalDateTime.now();
 
-  @JsonIgnore @CreatedBy private Integer createdBy;
+  @CreatedBy private Integer createdBy;
 }

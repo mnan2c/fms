@@ -6,6 +6,7 @@ import com.mnan2c.fms.repository.BaseRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.inject.Inject;
@@ -27,6 +28,7 @@ public abstract class BaseCrudService<E extends BaseEntity, DTO extends BaseDto>
   }
 
   @Override
+  @Transactional
   public DTO update(DTO dto) throws BusinessException {
     if (dto.getId() == null) {
       throw BusinessException.instance(ErrorConsts.ID_IS_REQUIRED);

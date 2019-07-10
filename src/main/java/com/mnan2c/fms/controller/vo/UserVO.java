@@ -1,15 +1,15 @@
 package com.mnan2c.fms.controller.vo;
 
-import com.mnan2c.fms.entity.User;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 @Data
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
-public class UserVO extends User {
-  private String province;
-  private String city;
-  private String street;
+@ToString
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserVO {
+  private String name;
+  private String avatar;
+  private String token;
+  private String roleName;
 }

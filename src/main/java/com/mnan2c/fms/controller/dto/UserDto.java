@@ -21,4 +21,6 @@ public class UserDto extends BaseDto {
   private String nickName;
   private ZonedDateTime birth;
   private String description;
+  private String avatar;
+  private String roleId;
 }

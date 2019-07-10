@@ -3,17 +3,17 @@ package com.mnan2c.fms.entity;
 import com.mnan2c.fms.common.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import java.time.ZonedDateTime;
 
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Entity
-@Table(name = "user")
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 public class User extends BaseEntity {
 
   @Column(name = "name", nullable = false)
@@ -30,7 +30,11 @@ public class User extends BaseEntity {
 
   private String nickName;
 
+  private String avatar;
+
   private ZonedDateTime birth;
 
   private String description;
+
+  private Integer roleId;
 }

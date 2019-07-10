@@ -28,11 +28,10 @@ public class PlanController extends BaseCrudController<Plan, PlanDto> {
   public ResponseEntity getAll(
       @RequestParam(value = "page", defaultValue = "1") int page,
       @RequestParam(value = "size", defaultValue = "10") int size) {
-    Sort sort =
-        new Sort(Sort.Direction.ASC, "status") //
-            .and(new Sort(Sort.Direction.DESC, "createdDate"));
+    Sort sort = new Sort(Sort.Direction.ASC, "status", "priority");
+    sort.and(new Sort(Sort.Direction.DESC, "createdDate"));
     Pageable pageable = PageRequest.of(page, size, sort);
-    Page<PlanDto> dtos = planService.findAll(pageable);
+    Page<PlanDto> dtos = planService.findPlansByCreatedBy(getCurrentUserId(), pageable);
     return ResponseEntity.ok(dtos);
   }
 

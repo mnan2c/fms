@@ -15,7 +15,7 @@ import java.util.List;
 public interface UserRepository
     extends JpaSpecificationExecutor<User>, BaseRepository<User, Integer> {
 
-  User findByName(String name);
+  User findByNameAndPassword(String name, String password);
 
   User findByNameOrEmail(String name, String email);
 
@@ -25,6 +25,11 @@ public interface UserRepository
   @Modifying
   @Query("update User set userName = ?1 where id = ?2")
   int modifyById(String userName, Integer id);
+
+  @Transactional(timeout = 10)
+  @Modifying
+  @Query("update User set password = ?1 where id = ?2")
+  int resetPassword(String newPassword, Integer id);
 
   @Transactional
   @Modifying

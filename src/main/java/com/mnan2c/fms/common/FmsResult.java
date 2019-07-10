@@ -6,17 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.io.Serializable;
-
 @Data
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class FmsResult implements Serializable {
+public class FmsResult<T> {
 
-  private Integer statusCodeValue;
+  private Integer code;
   private String message;
-  private Object body;
+  private T data;
 
   public static FmsResult instance(Integer code, String message) {
     return new FmsResult(code, message, null);
@@ -26,7 +24,7 @@ public class FmsResult implements Serializable {
     return new FmsResult(consts.getCode(), consts.getMessage(), null);
   }
 
-  public static FmsResult successResult(Object data) {
+  public static <T> FmsResult<T> success(T data) {
     return new FmsResult(200, "", data);
   }
 }

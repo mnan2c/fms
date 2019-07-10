@@ -1,14 +1,13 @@
 package com.mnan2c.fms.common;
 
 import org.springframework.core.MethodParameter;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
+// 封装返回体
 @RestControllerAdvice
 public class FmsResponseAdvice implements ResponseBodyAdvice {
 
@@ -20,17 +19,12 @@ public class FmsResponseAdvice implements ResponseBodyAdvice {
       Class aClass,
       ServerHttpRequest serverHttpRequest,
       ServerHttpResponse serverHttpResponse) {
-    return new ResponseEntity<>(o, HttpStatus.OK);
+    return FmsResult.success(o);
   }
 
   @Override
   public boolean supports(MethodParameter methodParameter, Class clas) {
-    // 获取当前处理请求的controller的方法
-    String methodName = methodParameter.getMethod().getName();
     Class<?> returnType = methodParameter.getMethod().getReturnType();
-    // 不拦截/不需要处理返回值 的方法
-    String method = "loginCheck"; // 如登录
-    // 不拦截: 方法名补位loginCheck，且返回的实体类不为FmsResult
-    return !method.equals(methodName) && !FmsResult.class.equals(returnType);
+    return !FmsErrorResult.class.equals(returnType);
   }
 }

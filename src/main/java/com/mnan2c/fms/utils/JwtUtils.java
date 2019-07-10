@@ -1,11 +1,13 @@
 package com.mnan2c.fms.utils;
 
+import com.mnan2c.fms.entity.User;
+import com.mnan2c.fms.exception.BusinessException;
+import com.mnan2c.fms.exception.ErrorConsts;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-import javax.servlet.ServletException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,12 +16,14 @@ public class JwtUtils {
 
   static final String base64EncodedSecretKey = "base64EncodedSecretKey"; // 私钥
   static final long TOKEN_EXP = 1000 * 60 * 60 * 24;
+  //  static final long TOKEN_EXP = 1000 * 2;
 
-  public static String getToken(String name, String password) {
+  // 生成token
+  public static String getToken(User user) {
     return Jwts.builder()
-        .setSubject(name)
-        .claim("name", name)
-        .claim("password", password)
+        .setSubject(user.getName())
+        .claim("name", user.getName())
+        .claim("password", user.getPassword())
         .setIssuedAt(new Date())
         .setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXP))
         .signWith(SignatureAlgorithm.HS256, base64EncodedSecretKey)
@@ -27,7 +31,7 @@ public class JwtUtils {
   }
 
   // 解析token
-  public static Map<String, String> extractToken(String token) throws ServletException {
+  public static Map<String, String> extractToken(String token) throws BusinessException {
     try {
       final Claims claims =
           Jwts.parser().setSigningKey(base64EncodedSecretKey).parseClaimsJws(token).getBody();
@@ -36,9 +40,9 @@ public class JwtUtils {
       result.put("password", (String) claims.get("password"));
       return result;
     } catch (ExpiredJwtException e1) {
-      throw new ServletException("token expired");
+      throw BusinessException.instance(ErrorConsts.TOKEN_EXPIRED);
     } catch (Exception e) {
-      throw new ServletException("other token exception");
+      throw BusinessException.instance(ErrorConsts.INVALID_TOKEN);
     }
   }
 }
