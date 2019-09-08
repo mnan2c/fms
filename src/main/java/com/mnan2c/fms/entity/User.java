@@ -35,6 +35,4 @@ public class User extends BaseEntity {
   private ZonedDateTime birth;
 
   private String description;
-
-  private Integer roleId;
 }

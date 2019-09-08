@@ -14,16 +14,15 @@ import javax.persistence.Entity;
 @EqualsAndHashCode(callSuper = true)
 public class Tests extends BaseEntity {
 
-  @Column(length = 8000, name = "name_to_edit")
-  private String nameToEdit;
-
-  @Column(length = 8000, name = "name_to_display")
-  private String nameToDisplay;
+  private Integer testPaperId;
 
   /** 1. 单选 2. 多选 3. 填空题 4. 简答题 */
   private Integer type;
 
-  private Integer testPaperId;
+  @Column(length = 1000)
+  private String question;
+
+  private String selections;
 
   private Integer sort;
 
@@ -34,5 +33,5 @@ public class Tests extends BaseEntity {
   private Boolean isCorrect;
 
   // 分值
-  private Integer points;
+  private Integer point;
 }

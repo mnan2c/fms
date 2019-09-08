@@ -1,5 +1,6 @@
 package com.mnan2c.fms.common;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -9,5 +10,7 @@ public class BaseDto {
 
   private Integer id;
   private Integer createdBy;
-  private LocalDateTime createdDate;
+
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  private LocalDateTime createdDate = LocalDateTime.now();
 }

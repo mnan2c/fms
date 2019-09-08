@@ -5,23 +5,19 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import javax.persistence.Column;
-
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class TestsDto extends BaseDto {
 
-  @Column(length = 8000, name = "name_to_edit")
-  private String nameToEdit;
-
-  @Column(length = 8000, name = "name_to_display")
-  private String nameToDisplay;
+  private Integer testPaperId;
 
   /** 1. 单选 2. 多选 3. 填空题 4. 简答题 */
   private Integer type;
 
-  private Integer testPaperId;
+  private String question;
+
+  private String selections;
 
   private Integer sort;
 
@@ -31,5 +27,6 @@ public class TestsDto extends BaseDto {
 
   private Boolean isCorrect;
 
-  private Integer points;
+  // 分值
+  private Integer point;
 }

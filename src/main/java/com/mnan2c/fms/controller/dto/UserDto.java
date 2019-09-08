@@ -22,5 +22,4 @@ public class UserDto extends BaseDto {
   private ZonedDateTime birth;
   private String description;
   private String avatar;
-  private String roleId;
 }

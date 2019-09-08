@@ -35,8 +35,6 @@ public class ExceptionHandlerFilter implements Filter {
     HttpServletRequest httpServletRequest = (HttpServletRequest) request;
     HttpServletResponse httpServletResponse = (HttpServletResponse) response;
     String origin = httpServletRequest.getHeader("Origin");
-    log.warn("request origin: [{}]", origin);
-    log.warn("allow origin: [{}]", allowOrigin);
     httpServletResponse.addHeader("Access-Control-Allow-Origin", allowOrigin);
     httpServletResponse.addHeader(
         "Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS, DELETE");

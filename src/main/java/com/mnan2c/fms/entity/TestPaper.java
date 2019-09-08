@@ -6,9 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.Entity;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 
 @Data
 @Entity
@@ -18,9 +16,12 @@ public class TestPaper extends BaseEntity {
 
   private String name;
 
-  private BigDecimal totalPoints;
+  /** 1. 语文；2. 数学； 3. 英语；4. 物理；5. 化学； 6. 生物；7. 历史；8.地理；9. 政治 */
+  private Integer type;
 
-  private HashMap<String, Object> eachPartPoints;
+  private Integer totalPoints = 0;
+
+  private Integer achievedPoints = 0;
 
   private LocalDateTime startTime;
 

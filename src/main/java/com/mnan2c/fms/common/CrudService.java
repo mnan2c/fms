@@ -17,6 +17,10 @@ public interface CrudService<E, DTO> {
 
   Page<DTO> findAll(Pageable pageable);
 
+  Page<DTO> findAll(String query, Pageable pageable);
+
+  List<DTO> findAll(String query);
+
   DTO findOne(Integer id);
 
   void delete(Integer id);
@@ -24,4 +28,6 @@ public interface CrudService<E, DTO> {
   List<DTO> findByIds(List<Integer> ids);
 
   E deltaUpdate(E entity) throws BusinessException;
+
+  int deleteByIds(List<Integer> ids);
 }

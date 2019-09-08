@@ -36,4 +36,7 @@ public class PlanDto extends BaseDto {
   private Integer targetValue;
 
   private Integer achievedValue;
+
+  // 1. 短期；2. 长期
+  private Integer type;
 }

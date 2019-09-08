@@ -18,8 +18,10 @@ public class PlanService extends BaseCrudService<Plan, PlanDto> {
   @Inject private PlanRepository planRepository;
   @Inject private PlanConverter planConverter;
 
-  public Page<PlanDto> findPlansByCreatedBy(Integer createdBy, Pageable pageable) {
-    Page<Plan> pageData = planRepository.findPlansByCreatedBy(createdBy, pageable);
+  public Page<PlanDto> findPlansByCreatedByAndStatusIn(
+      Integer createdBy, Integer type, List<Integer> status, Pageable pageable) {
+    Page<Plan> pageData =
+        planRepository.findPlansByCreatedByAndTypeAndStatusIn(createdBy, type, status, pageable);
     List<PlanDto> dtos = planConverter.entitiesToDtos(pageData.getContent());
     return new PageImpl<>(dtos, pageable, pageData.getTotalElements());
   }

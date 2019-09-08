@@ -87,4 +87,25 @@ public abstract class BaseCrudService<E extends BaseEntity, DTO extends BaseDto>
     // TODO
     return null;
   }
+
+  @Override
+  public Page<DTO> findAll(String query, Pageable pageable) {
+    Page<E> page = repository.findAll(query, pageable);
+    return new PageImpl<>(
+        mapper.entitiesToDtos(page.getContent()), //
+        pageable, //
+        page.getTotalElements() //
+        );
+  }
+
+  @Override
+  public List<DTO> findAll(String query) {
+    List<E> list = repository.findAll(query);
+    return mapper.entitiesToDtos(list);
+  }
+
+  @Override
+  public int deleteByIds(List<Integer> ids) {
+    return repository.deleteByIds(ids);
+  }
 }

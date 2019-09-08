@@ -12,6 +12,8 @@ public enum ErrorConsts {
   FAILED_TO_REGISTER(400006, "failed.to.register"),
   TOKEN_EXPIRED(400007, "token.expired"),
   INVALID_PASSWORD(400008, "invalid.password"),
+  ALREADY_SIGNIN(400009, "already.signin"),
+  UNSUPPORTED_OPERATION(400010, "unsupported.operation"),
 
   SYSTEM_ERROR(500001, "system.error");
 

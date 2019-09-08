@@ -1,11 +1,13 @@
 package com.mnan2c.fms.common;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.mnan2c.fms.controller.dto.UserDto;
 import com.mnan2c.fms.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,15 +48,15 @@ public abstract class BaseCrudController<E extends BaseEntity, D extends BaseDto
     return ResponseEntity.ok(dto);
   }
 
-  @GetMapping
-  public ResponseEntity getAll(
-      @RequestParam(value = "page", defaultValue = "0") int page,
-      @RequestParam(value = "size", defaultValue = "10") int size) {
-    log.debug("Request to get all entities");
-    Pageable pageable = PageRequest.of(page, size);
-    Page<D> dtos = crudService.findAll(pageable);
-    return ResponseEntity.ok(dtos);
-  }
+  //  @GetMapping
+  //  public ResponseEntity getAll(
+  //      @RequestParam(value = "page", defaultValue = "0") int page,
+  //      @RequestParam(value = "size", defaultValue = "10") int size) {
+  //    log.debug("Request to get all entities");
+  //    Pageable pageable = PageRequest.of(page, size);
+  //    Page<D> dtos = crudService.findAll(pageable);
+  //    return ResponseEntity.ok(dtos);
+  //  }
 
   @GetMapping(params = {"ids"})
   public ResponseEntity getByIds(@RequestParam("ids") List<Integer> ids) {
@@ -70,6 +72,26 @@ public abstract class BaseCrudController<E extends BaseEntity, D extends BaseDto
     return ResponseEntity.ok(1);
   }
 
+  @GetMapping
+  public Page<D> getPageEntities(
+      @RequestParam(value = "query", required = false) String query,
+      @RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
+      @RequestParam(value = "size", defaultValue = "10", required = false) Integer size,
+      @RequestParam(value = "sort", required = false) String sort) {
+    // TODO
+    if (StringUtils.isNotBlank(sort)) {
+      JSONObject obj = JSON.parseObject(sort);
+      obj.get("ASC");
+      obj.get("DESC");
+    }
+    return crudService.findAll(query, PageRequest.of(page, size));
+  }
+
+  @GetMapping("/query")
+  public List<D> queryList(@RequestParam(value = "query", required = false) String query) {
+    return crudService.findAll(query);
+  }
+
   /** 获取当前登录用户ID */
   protected Integer getCurrentUserId() {
     return (Integer) httpSession.getAttribute("userId");
@@ -79,5 +101,10 @@ public abstract class BaseCrudController<E extends BaseEntity, D extends BaseDto
     Integer userId = (Integer) httpSession.getAttribute("userId");
     UserDto user = userService.findOne(userId);
     return user;
+  }
+
+  @DeleteMapping
+  public int deleteByIds(@RequestParam("ids") List<Integer> ids) {
+    return crudService.deleteByIds(ids);
   }
 }

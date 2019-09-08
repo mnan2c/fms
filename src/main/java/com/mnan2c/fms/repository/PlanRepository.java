@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface PlanRepository extends BaseRepository<Plan, Integer> {
 
   @Transactional
@@ -14,5 +16,6 @@ public interface PlanRepository extends BaseRepository<Plan, Integer> {
   @Query(value = "update Plan set status=3 where id=?1")
   int completePlan(Integer id);
 
-  Page<Plan> findPlansByCreatedBy(Integer createdBy, Pageable pageable);
+  Page<Plan> findPlansByCreatedByAndTypeAndStatusIn(
+      Integer createdBy, Integer type, List<Integer> status, Pageable pageable);
 }

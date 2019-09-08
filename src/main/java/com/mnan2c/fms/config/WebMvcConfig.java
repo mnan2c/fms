@@ -9,11 +9,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
@@ -23,7 +25,7 @@ import java.util.List;
 // 从而导致所有的Date返回都变成时间戳
 @Slf4j
 @Configuration
-public class WebMvcConfig extends WebMvcConfigurationSupport {
+public class WebMvcConfig implements WebMvcConfigurer {
 
   @Override
   public void addCorsMappings(CorsRegistry registry) {
@@ -74,7 +76,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
   //  }
 
   @Override
-  protected void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+  public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
     // 解决中文乱码
     converters.add(responseBodyConverter());
     // 解决 添加解决中文乱码后 上述配置之后，返回json数据直接报错 500：no convertter for return value of type
@@ -103,20 +105,27 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
     ObjectMapper objectMapper = getObjectMapper();
 
-    objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-    objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-    //    objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-
     // 默认，如果反序列化时，JSON字符串里有字段，而POJO中没有定义，会抛异常，可以设置这个来忽略未定义的字段
     objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+    objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+    objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+    objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
     // 默认如果是字符串("")，反序列化会失败，可以开启这个设置，字符串("")会被反序列化成(null)
     objectMapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
-    //    objectMapper.disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE);
+
     objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
     objectMapper.registerModule(new Jdk8Module());
-    //    objectMapper.registerModule(new ParameterNamesModule());
     objectMapper.registerModule(new JavaTimeModule());
+
     converter.setObjectMapper(objectMapper);
     return converter;
+  }
+
+  // TODO 这里没有解决Pageable的问题
+  @Override
+  public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+    // 注册Spring data jpa pageable的参数分解器
+    argumentResolvers.add(new PageableHandlerMethodArgumentResolver());
   }
 }
